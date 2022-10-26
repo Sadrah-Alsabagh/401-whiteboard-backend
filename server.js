@@ -5,6 +5,12 @@ const app = express();
 
 app.use(cors());
 
+app.get('/',(req,res)=>{
+    res.status(200).json ({
+        message:'Home page',
+        code: 200
+    })
+})
 function start(port) {
     app.listen(port, () => console.log(`Server is running on port ${port}`));
 };
