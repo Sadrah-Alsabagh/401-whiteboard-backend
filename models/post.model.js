@@ -15,3 +15,4 @@ const Post =(sequelize, DataTypes) => sequelize.define(
       }
 
 );
+module.exports = Post;
