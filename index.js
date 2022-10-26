@@ -3,4 +3,8 @@
 const server = require('./server');
 require ('dotenv').config();
 
-server.start(process.env.PORT || 3003);
+const {db} = require('./models/index');
+db.sync().then(() => {server.start(process.env.PORT || 3000);}).catch(console.error);
+
+
+
