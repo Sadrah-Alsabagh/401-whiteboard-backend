@@ -3,39 +3,49 @@
 const express = require('express');
 const router = express.Router();
 
-const{Post} = require('../models/index');
-const {Comment} = require('../models/index');
+const{Post, commentModel} = require('../models/index');
 //Routes
 
-router.get('/post', getPosts);
-router.get('/post/:id', getOnePost);
+
+router.get('/post', getPostComment);
+//]router.get('/post/:id', getPostComment);
 router.post('/post', addPost);
 router.put('/post/:id', updatePost);
 router.delete('/post/:id', deletePost);
 
 
 //CRUD operations 
-async function getPosts(req,res) {
-    //{where :{id:id},include: [Comment]}
-    let post = await Post.findAll({include: [Comment]});
+// async function getPosts(req,res) {
+//     let post = await Post.read();
+//     res.status(200).json({
+//         post
+//     })
+// }
+
+// async function getOnePost(req,res) {
+//     const id = req.params.id;
+//     // {
+//     //     where:{
+//     //         id: id
+//     //     },include: [Comment]
+//     // }
+//     let post = await Post.read(id);
+    
+//     res.status(200).json({
+//         post
+//     })
+// }
+ 
+
+async function getPostComment(req,res){
+    const PostComment = await Post.readWithComment(commentModel);
+
     res.status(200).json({
-        post
+        PostComment
     })
 }
 
-async function getOnePost(req,res) {
-    const id = req.params.id;
-    let post = await Post.findOne({
-        where:{
-            id: id
-        },include: [Comment]
-    });
-    
-    res.status(200).json({
-        post
-    })
-}
- 
+
  async function addPost(req,res) {
     let newPost = req.body;
     let post = await Post.create(newPost);
@@ -55,19 +65,25 @@ async function updatePost(req,res) {
     const updatedPost = await post.update(obj);
 
     res.status(200).json(
-        updatedPost
+        {
+            message: `post ${id} has been updated`
+        }
     );
 }
 
 async function deletePost(req,res) {
     const id = req.params.id;
-    let deletedPost = await Post.destroy({
+    let deletedPost = await Post.delete({
         where:{
             id: id
         }
     });
     res.status(204).json({
-        deletedPost
+        message: `post ${id} has been deleted`
     })
 }
+
+
+
+
 module.exports = router;
