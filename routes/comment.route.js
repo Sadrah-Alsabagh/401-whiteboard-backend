@@ -9,14 +9,14 @@ const {Comment} = require('../models/index');
 
 router.get('/comment', getComment);
 router.post('/comment', addComment);
-// router.get('/comment/:id', getOneComment);
-// router.put('/comment/:id', updateComment);
-// router.delete('/comment/:id', deleteComment);
-
+//router.get('/comment/:id', getOneComment);
+router.put('/comment/:id', updateComment);
+router.delete('/comment/:id', deleteComment);
 
 //CRUD operations
+
 async function getComment(req,res) {
-    let comment = await Comment.findAll();
+    let comment = await Comment.read();
     res.status(200).json({
         comment
     })
@@ -32,7 +32,7 @@ async function addComment(req,res) {
 
 // async function getOneComment(req,res) {
 //     const id = req.params.id;
-//     let comment = await Comment.findOne({
+//     let comment = await Comment.read({
 //         where:{
 //             id: id
 //         }
@@ -44,32 +44,30 @@ async function addComment(req,res) {
 // }
  
 
+async function updateComment(req,res) {
+    const id = req.params.id;
+    const obj = req.body;
+    let comment = await Comment.findOne({
+        where:{
+            id: id
+        }
+    });
+    const updatedComment = await comment.update(obj);
 
+    res.status(200).json(
+        updatedComment
+    );
+}
 
-// async function updateComment(req,res) {
-//     const id = req.params.id;
-//     const obj = req.body;
-//     let comment = await Comment.findOne({
-//         where:{
-//             id: id
-//         }
-//     });
-//     const updatedComment = await comment.update(obj);
-
-//     res.status(200).json(
-//         updatedComment
-//     );
-// }
-
-// async function deleteComment(req,res) {
-//     const id = req.params.id;
-//     let deletedComment = await Comment.destroy({
-//         where:{
-//             id: id
-//         }
-//     });
-//     res.status(204).json({
-//         deletedComment
-//     })
-// }
+async function deleteComment(req,res) {
+    const id = req.params.id;
+    let deletedComment = await Comment.delete({
+        where:{
+            id: id
+        }
+    });
+    res.status(204).json({
+        deletedComment
+    })
+}
 module.exports = router;
