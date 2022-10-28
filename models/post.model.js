@@ -2,7 +2,7 @@
 
 
 const Post =(sequelize, DataTypes) => sequelize.define(
-    "Post",
+    "Posts",
     {
         postTitle: {
           type: DataTypes.STRING,
@@ -13,6 +13,5 @@ const Post =(sequelize, DataTypes) => sequelize.define(
           allowNull: false,
         },
       }
-
 );
 module.exports = Post;
