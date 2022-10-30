@@ -3,6 +3,7 @@
 const{Sequelize, DataTypes} = require('sequelize'); 
 const post = require('./post.model');
 const comment = require('./comment.model');
+const user = require('./user.model');
 const collection = require('../collections/user-comment-routes');
 
 const POSTGRES_URL = process.env.DATABASE_URL||"postgres://sedra:sedra@123@127.0.0.1:5432/whiteboard";
@@ -19,6 +20,7 @@ const sequelizeOption = {
 let sequelize = new Sequelize(POSTGRES_URL, sequelizeOption);
 let postModel = post(sequelize, DataTypes);
 let commentModel = comment(sequelize, DataTypes);
+let userModel = user(sequelize, DataTypes);
 
 //Relations
 postModel.hasMany(commentModel, {foreignKey:'postID', sourceKey:'id'})
@@ -34,4 +36,5 @@ module.exports ={
     Post: postCollection,
     Comment: commentCollection,
     commentModel:commentModel,
+    userModel:userModel,
 }
