@@ -21,7 +21,7 @@ class userCommentRoutes{
         if(id){
 return await this.model.findOne({where: {id: id}});
         } else{
-        return await this.model.findAll({where: {id: id}});
+        return await this.model.findAll();
  
         }
         }catch(e){
