@@ -8,9 +8,11 @@ const {User} = require('../models/index');
 const userAuth = require('../middlewares/userAuth');
 
 //Routes
-router.post('/login',(req,res)=>{
-res.status(200).send('login');
-})
+router.post('/signin',(req,res)=>{
+res.status(200).send('signin');
+});
+
+
 router.post('/signup',userAuth,(req,res)=>{
     res.status(200).send('signup');
     })
