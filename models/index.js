@@ -4,6 +4,7 @@ const{Sequelize, DataTypes} = require('sequelize');
 const post = require('./post.model');
 const comment = require('./comment.model');
 const user = require('./user.model');
+
 const collection = require('../collections/user-comment-routes');
 
 const POSTGRES_URL = process.env.DATABASE_URL||"postgres://sedra:sedra@123@127.0.0.1:5432/whiteboard";

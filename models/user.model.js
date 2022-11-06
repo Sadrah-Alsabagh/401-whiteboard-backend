@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = (sequelize, DataTypes) => {sequelize.define('User', {
+const User =(sequelize, DataTypes) => sequelize.define('User', 
+{
   userName: {
     type: DataTypes.STRING,
     allowNull: false
@@ -15,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false
   }
-});
-return User;
 }
+);
+
+
+module.exports = User;

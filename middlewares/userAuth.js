@@ -1,7 +1,7 @@
 'use strict';
 
-const { read } = require('fs');
-const User = require('../models/index');
+// const { read } = require('fs');
+const User = require('../models');
 
 //Sign up
 const saveUser = async (req,res,next)=> {
@@ -13,7 +13,7 @@ const saveUser = async (req,res,next)=> {
             }
         });
         if(userName){
-            return res.status(409).send('UserName already taken');
+            return res.status(409).send('User Name already taken');
         }
     //Search for the email in DB
     const userEmail = await User.findOne({
@@ -22,7 +22,7 @@ const saveUser = async (req,res,next)=> {
         }
     });
     if(userEmail){
-        return res.status(409).send('userEmail already taken');
+        return res.status(409).send('User Email already taken');
     }
     next(); 
     } catch(e)
@@ -33,5 +33,5 @@ const saveUser = async (req,res,next)=> {
 }
 
 module.exports ={
-    saveUser
+    saveUser ,
 }
