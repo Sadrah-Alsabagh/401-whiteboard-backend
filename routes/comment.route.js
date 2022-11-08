@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {Comment} = require('../models/index');
+const { Comment } = require('../models/index');
 
 //Routes
 
@@ -15,14 +15,14 @@ router.delete('/comment/:id', deleteComment);
 
 //CRUD operations
 
-async function getComment(req,res) {
+async function getComment(req, res) {
     let comment = await Comment.read();
     res.status(200).json({
         comment
     })
 };
 
-async function addComment(req,res) {
+async function addComment(req, res) {
     let newComment = req.body;
     let comment = await Comment.create(newComment);
     res.status(201).json({
@@ -37,18 +37,18 @@ async function addComment(req,res) {
 //             id: id
 //         }
 //     });
-    
+
 //     res.status(200).json({
 //         comment
 //     })
 // }
- 
 
-async function updateComment(req,res) {
+
+async function updateComment(req, res) {
     const id = req.params.id;
     const obj = req.body;
     let comment = await Comment.findOne({
-        where:{
+        where: {
             id: id
         }
     });
@@ -59,10 +59,10 @@ async function updateComment(req,res) {
     );
 }
 
-async function deleteComment(req,res) {
+async function deleteComment(req, res) {
     const id = req.params.id;
     let deletedComment = await Comment.delete({
-        where:{
+        where: {
             id: id
         }
     });

@@ -13,13 +13,13 @@ app.use(commentRouter);
 app.use(authRouter);
 
 
-app.get('/',(req,res)=>{
-    res.status(200).json ({
-    message:'Home page',
-    code: 200
+app.get('/', (req, res) => {
+    res.status(200).json({
+        message: 'Home page',
+        code: 200
     })
 })
 function start(port) {
     app.listen(port, () => console.log(`Server is running on port ${port}`));
-}; 
-module.exports= {start};
+};
+module.exports = { start };
