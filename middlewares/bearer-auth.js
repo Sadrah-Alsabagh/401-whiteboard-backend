@@ -24,7 +24,7 @@ try {
     } else {
         next('You\'re not authorized!!')
     }
-    // console.log(userInfo)
+    console.log(userInfo)
 
 } catch (e) {
     next(e.message || e)
