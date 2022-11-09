@@ -26,7 +26,24 @@ const User = (sequelize, DataTypes) => sequelize.define('User',
       set(tokenObj) {
         return jwt.sign(tokenObj, process.env.JWT_SECRET)
       }
+    },
+    role:{
+      type: DataTypes.ENUM('admin','user'),
+      allowNull: false,
+      defaultValue: 'user'
+    },
+    capabilities:{
+      type : DataTypes.VIRTUAL,
+      get: function()
+      {
+        const acl = {
+          admin:['read', 'create', 'delete','update'],
+          user: ['read', 'create']
+        }
+        return acl[this.role];
+      }
     }
+
   }
 );
 
