@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (req, res, next) => {
-    console.log('From inside the middleware');
+    //console.log('From inside the middleware');
     if (!req.headers.authorization) {
         return next('You are not authrized');
 
@@ -10,12 +10,12 @@ module.exports = (req, res, next) => {
     console.log(token);
     users.authenticateToken(token);
     next();
-}
+
 
 try {
     const validUser = users.authenticateToken(token);
 
-    const userInfo = await users.findOne({ where: { userName: validUser.userName } });
+    const userInfo =  users.findOne({ where: { userName: validUser.userName } });
     if (userInfo) {
         req.user = userInfo;
         req.token = userInfo.token
@@ -28,4 +28,5 @@ try {
 
 } catch (e) {
     next(e.message || e)
+}
 }

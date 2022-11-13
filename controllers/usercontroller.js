@@ -1,7 +1,7 @@
 'use strict';
 const bcrypt = require('bcrypt');
 const base64 = require('base-64');
-const User = require('../models').users;
+const User = require('../models');
 
 const signup = async (req, res) => {
   try {
@@ -15,7 +15,19 @@ const signup = async (req, res) => {
     const user = await User.create(data);
 
     if (user) {
-      res.status(201).json(user)
+      res.status(201).json({
+        "User": {
+          userName: user.userName,
+          userEmail: user.userEmail,
+          userPassword: user.userPassword,
+          role: user.role,
+          capabilities: user.capabilities,
+          token: user.token
+        }
+      });
+
+    } else {
+      res.status(400);
     }
   }
 
@@ -54,8 +66,19 @@ const login = async (req, res) => {
 }
 
 const allUsers = async (req, res) => {
-  const users = await User.findAll();
-  res.json(users);
+  const users = await User.findAll({ include: [Comment, Post] });
+  const resp = users.map((users) => {
+    return {
+      "User": {
+        userName: user.userName,
+        userEmail: user.userEmail,
+        userPassword: user.userPassword,
+        role: user.role,
+        Post: user.Post
+      }
+    }
+  })
+  res.json(resp);
 }
 
 module.exports = {

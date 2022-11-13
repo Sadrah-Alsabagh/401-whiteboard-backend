@@ -1,7 +1,7 @@
 'use strict';
 
 // const { read } = require('fs');
-const User = require('../models');
+const User = require('../models').User;
 
 //Sign up
 const saveUser = async (req, res, next) => {

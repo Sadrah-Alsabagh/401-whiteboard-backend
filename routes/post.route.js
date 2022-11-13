@@ -2,16 +2,17 @@
 
 const express = require('express');
 const router = express.Router();
-
-const{Post, commentModel} = require('../models/index');
+const acl = require('../middlewares/acl');
+const bearerAuth = require('../middlewares/bearer-auth');
+const { Post, commentModel } = require('../models/index');
 //Routes
 
 
-router.get('/post', getPostComment);
+router.get('/post', bearerAuth, acl, getPostComment);
 //router.get('/post/:id', getPostComment);
-router.post('/post', addPost);
-router.put('/post/:id', updatePost);
-router.delete('/post/:id', deletePost);
+router.post('/post', bearerAuth, acl('create'), addPost);
+router.put('/post/:id:userid', bearerAuth, acl('update'), updatePost);
+router.delete('/post/:id:userid', bearerAuth, acl('delete'), deletePost);
 
 
 //CRUD operations 
@@ -30,21 +31,21 @@ router.delete('/post/:id', deletePost);
 //     //     },include: [Comment]
 //     // }
 //     let post = await Post.read(id);
-    
+
 //     res.status(200).json({
 //         post
 //     })
 // }
- 
 
-async function getPostComment(req,res){
+
+async function getPostComment(req, res) {
     const Post_Comment = await Post.readWithComment(commentModel);
 
     res.status(200).json({
         Post_Comment
     })
 }
- async function addPost(req,res) {
+async function addPost(req, res) {
     let newPost = req.body;
     let post = await Post.create(newPost);
     res.status(201).json({
@@ -52,11 +53,11 @@ async function getPostComment(req,res){
     });
 }
 
-async function updatePost(req,res) {
+async function updatePost(req, res) {
     const id = req.params.id;
     const obj = req.body;
     let post = await Post.findOne({
-        where:{
+        where: {
             id: id
         }
     });
@@ -69,10 +70,10 @@ async function updatePost(req,res) {
     );
 }
 
-async function deletePost(req,res) {
+async function deletePost(req, res) {
     const id = req.params.id;
     let deletedPost = await Post.delete({
-        where:{
+        where: {
             id: id
         }
     });

@@ -58,6 +58,8 @@ class userCommentRoutes {
             console.error(`Error during reading the comment with the model: ${this.model.name}`);
         }
     }
+
+
 }
 
 module.exports = userCommentRoutes;
